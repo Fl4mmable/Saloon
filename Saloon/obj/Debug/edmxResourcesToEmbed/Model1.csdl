@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BeautySalonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="phone_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="history" Relationship="Self.FK_history_client" FromRole="client" ToRole="history" />
+    <NavigationProperty Name="Records" Relationship="Self.FK_Records_client" FromRole="client" ToRole="Records" />
+  </EntityType>
+  <EntityType Name="day_of_week">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Records" Relationship="Self.FK_Records_day_of_week" FromRole="day_of_week" ToRole="Records" />
+    <NavigationProperty Name="TimeWork" Relationship="Self.FK_TimeWork_day_of_week" FromRole="day_of_week" ToRole="TimeWork" />
+  </EntityType>
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="post_id" Type="Int32" />
+    <Property Name="phone_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="post" Relationship="Self.FK_employee_post" FromRole="employee" ToRole="post" />
+    <NavigationProperty Name="Records" Relationship="Self.FK_Records_employee" FromRole="employee" ToRole="Records" />
+    <NavigationProperty Name="service_list" Relationship="Self.FK_service_list_employee" FromRole="employee" ToRole="service_list" />
+    <NavigationProperty Name="TimeWork" Relationship="Self.FK_TimeWork_employee" FromRole="employee" ToRole="TimeWork" />
+  </EntityType>
+  <EntityType Name="Graphic">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="jobstart" Type="Time" Precision="7" />
+    <Property Name="jobend" Type="Time" Precision="7" />
+    <NavigationProperty Name="TimeWork" Relationship="Self.FK_TimeWork_Graphic" FromRole="Graphic" ToRole="TimeWork" />
+  </EntityType>
+  <EntityType Name="history">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="date_service" Type="DateTime" Precision="0" />
+    <Property Name="status_id" Type="Int32" />
+    <Property Name="service_list_id" Type="Int32" />
+    <Property Name="client_id" Type="Int32" />
+    <Property Name="time" Type="Time" Precision="7" />
+    <NavigationProperty Name="client" Relationship="Self.FK_history_client" FromRole="history" ToRole="client" />
+    <NavigationProperty Name="service_list" Relationship="Self.FK_history_service_list" FromRole="history" ToRole="service_list" />
+    <NavigationProperty Name="status" Relationship="Self.FK_history_status" FromRole="history" ToRole="status" />
+  </EntityType>
+  <EntityType Name="post">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="employee" Relationship="Self.FK_employee_post" FromRole="post" ToRole="employee" />
+  </EntityType>
+  <EntityType Name="Records">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="id_client" Type="Int32" />
+    <Property Name="id_employee" Type="Int32" />
+    <Property Name="id_day_of_week" Type="Int32" />
+    <Property Name="timestart" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="timeend" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id_service" Type="Int32" />
+    <Property Name="date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="client" Relationship="Self.FK_Records_client" FromRole="Records" ToRole="client" />
+    <NavigationProperty Name="day_of_week" Relationship="Self.FK_Records_day_of_week" FromRole="Records" ToRole="day_of_week" />
+    <NavigationProperty Name="employee" Relationship="Self.FK_Records_employee" FromRole="Records" ToRole="employee" />
+    <NavigationProperty Name="service" Relationship="Self.FK_Records_service" FromRole="Records" ToRole="service" />
+  </EntityType>
+  <EntityType Name="service">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="cost" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="duration" Type="Int32" />
+    <NavigationProperty Name="Records" Relationship="Self.FK_Records_service" FromRole="service" ToRole="Records" />
+    <NavigationProperty Name="service_list" Relationship="Self.FK_service_list_service" FromRole="service" ToRole="service_list" />
+  </EntityType>
+  <EntityType Name="service_list">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="service_id" Type="Int32" />
+    <Property Name="employee_id" Type="Int32" />
+    <NavigationProperty Name="employee" Relationship="Self.FK_service_list_employee" FromRole="service_list" ToRole="employee" />
+    <NavigationProperty Name="history" Relationship="Self.FK_history_service_list" FromRole="service_list" ToRole="history" />
+    <NavigationProperty Name="service" Relationship="Self.FK_service_list_service" FromRole="service_list" ToRole="service" />
+  </EntityType>
+  <EntityType Name="status">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="history" Relationship="Self.FK_history_status" FromRole="status" ToRole="history" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TimeWork">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="employee_id" Type="Int32" />
+    <Property Name="day_of_week_id" Type="Int32" />
+    <Property Name="ID_Graphic" Type="Int32" />
+    <NavigationProperty Name="day_of_week" Relationship="Self.FK_TimeWork_day_of_week" FromRole="TimeWork" ToRole="day_of_week" />
+    <NavigationProperty Name="employee" Relationship="Self.FK_TimeWork_employee" FromRole="TimeWork" ToRole="employee" />
+    <NavigationProperty Name="Graphic" Relationship="Self.FK_TimeWork_Graphic" FromRole="TimeWork" ToRole="Graphic" />
+  </EntityType>
+  <Association Name="FK_history_client">
+    <End Role="client" Type="Self.client" Multiplicity="0..1" />
+    <End Role="history" Type="Self.history" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="history">
+        <PropertyRef Name="client_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Records_client">
+    <End Role="client" Type="Self.client" Multiplicity="0..1" />
+    <End Role="Records" Type="Self.Records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Records">
+        <PropertyRef Name="id_client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Records_day_of_week">
+    <End Role="day_of_week" Type="Self.day_of_week" Multiplicity="0..1" />
+    <End Role="Records" Type="Self.Records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="day_of_week">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Records">
+        <PropertyRef Name="id_day_of_week" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeWork_day_of_week">
+    <End Role="day_of_week" Type="Self.day_of_week" Multiplicity="0..1" />
+    <End Role="TimeWork" Type="Self.TimeWork" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="day_of_week">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TimeWork">
+        <PropertyRef Name="day_of_week_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_employee_post">
+    <End Role="post" Type="Self.post" Multiplicity="0..1" />
+    <End Role="employee" Type="Self.employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="post">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="employee">
+        <PropertyRef Name="post_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Records_employee">
+    <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+    <End Role="Records" Type="Self.Records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Records">
+        <PropertyRef Name="id_employee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_service_list_employee">
+    <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+    <End Role="service_list" Type="Self.service_list" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="service_list">
+        <PropertyRef Name="employee_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeWork_employee">
+    <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+    <End Role="TimeWork" Type="Self.TimeWork" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TimeWork">
+        <PropertyRef Name="employee_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeWork_Graphic">
+    <End Role="Graphic" Type="Self.Graphic" Multiplicity="0..1" />
+    <End Role="TimeWork" Type="Self.TimeWork" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Graphic">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeWork">
+        <PropertyRef Name="ID_Graphic" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_history_service_list">
+    <End Role="service_list" Type="Self.service_list" Multiplicity="0..1" />
+    <End Role="history" Type="Self.history" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="service_list">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="history">
+        <PropertyRef Name="service_list_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_history_status">
+    <End Role="status" Type="Self.status" Multiplicity="0..1" />
+    <End Role="history" Type="Self.history" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="status">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="history">
+        <PropertyRef Name="status_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Records_service">
+    <End Role="service" Type="Self.service" Multiplicity="0..1" />
+    <End Role="Records" Type="Self.Records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="service">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Records">
+        <PropertyRef Name="id_service" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_service_list_service">
+    <End Role="service" Type="Self.service" Multiplicity="0..1" />
+    <End Role="service_list" Type="Self.service_list" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="service">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="service_list">
+        <PropertyRef Name="service_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BeautySalonEntities4" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="client" EntityType="Self.client" />
+    <EntitySet Name="day_of_week" EntityType="Self.day_of_week" />
+    <EntitySet Name="employee" EntityType="Self.employee" />
+    <EntitySet Name="Graphic" EntityType="Self.Graphic" />
+    <EntitySet Name="history" EntityType="Self.history" />
+    <EntitySet Name="post" EntityType="Self.post" />
+    <EntitySet Name="Records" EntityType="Self.Records" />
+    <EntitySet Name="service" EntityType="Self.service" />
+    <EntitySet Name="service_list" EntityType="Self.service_list" />
+    <EntitySet Name="status" EntityType="Self.status" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="TimeWork" EntityType="Self.TimeWork" />
+    <AssociationSet Name="FK_history_client" Association="Self.FK_history_client">
+      <End Role="client" EntitySet="client" />
+      <End Role="history" EntitySet="history" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Records_client" Association="Self.FK_Records_client">
+      <End Role="client" EntitySet="client" />
+      <End Role="Records" EntitySet="Records" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Records_day_of_week" Association="Self.FK_Records_day_of_week">
+      <End Role="day_of_week" EntitySet="day_of_week" />
+      <End Role="Records" EntitySet="Records" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeWork_day_of_week" Association="Self.FK_TimeWork_day_of_week">
+      <End Role="day_of_week" EntitySet="day_of_week" />
+      <End Role="TimeWork" EntitySet="TimeWork" />
+    </AssociationSet>
+    <AssociationSet Name="FK_employee_post" Association="Self.FK_employee_post">
+      <End Role="post" EntitySet="post" />
+      <End Role="employee" EntitySet="employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Records_employee" Association="Self.FK_Records_employee">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="Records" EntitySet="Records" />
+    </AssociationSet>
+    <AssociationSet Name="FK_service_list_employee" Association="Self.FK_service_list_employee">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="service_list" EntitySet="service_list" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeWork_employee" Association="Self.FK_TimeWork_employee">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="TimeWork" EntitySet="TimeWork" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeWork_Graphic" Association="Self.FK_TimeWork_Graphic">
+      <End Role="Graphic" EntitySet="Graphic" />
+      <End Role="TimeWork" EntitySet="TimeWork" />
+    </AssociationSet>
+    <AssociationSet Name="FK_history_service_list" Association="Self.FK_history_service_list">
+      <End Role="service_list" EntitySet="service_list" />
+      <End Role="history" EntitySet="history" />
+    </AssociationSet>
+    <AssociationSet Name="FK_history_status" Association="Self.FK_history_status">
+      <End Role="status" EntitySet="status" />
+      <End Role="history" EntitySet="history" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Records_service" Association="Self.FK_Records_service">
+      <End Role="service" EntitySet="service" />
+      <End Role="Records" EntitySet="Records" />
+    </AssociationSet>
+    <AssociationSet Name="FK_service_list_service" Association="Self.FK_service_list_service">
+      <End Role="service" EntitySet="service" />
+      <End Role="service_list" EntitySet="service_list" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

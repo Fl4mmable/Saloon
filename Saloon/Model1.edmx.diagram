@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f119beab40c04ddc83d9366400b0fa00" Name="Diagram1">
+        <EntityTypeShape EntityType="BeautySalonModel.client" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeautySalonModel.day_of_week" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeautySalonModel.employee" Width="1.5" PointX="1.5" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeautySalonModel.Graphic" Width="1.5" PointX="3.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeautySalonModel.history" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeautySalonModel.post" Width="1.5" PointX="1.5" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeautySalonModel.Records" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeautySalonModel.service" Width="1.5" PointX="1.5" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeautySalonModel.service_list" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeautySalonModel.status" Width="1.5" PointX="0.75" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeautySalonModel.sysdiagrams" Width="1.5" PointX="8.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeautySalonModel.TimeWork" Width="1.5" PointX="6" PointY="8.375" IsExpanded="true" />
+        <AssociationConnector Association="BeautySalonModel.FK_history_client" ManuallyRouted="false" />
+        <AssociationConnector Association="BeautySalonModel.FK_Records_client" ManuallyRouted="false" />
+        <AssociationConnector Association="BeautySalonModel.FK_Records_day_of_week" ManuallyRouted="false" />
+        <AssociationConnector Association="BeautySalonModel.FK_TimeWork_day_of_week" ManuallyRouted="false" />
+        <AssociationConnector Association="BeautySalonModel.FK_employee_post" ManuallyRouted="false" />
+        <AssociationConnector Association="BeautySalonModel.FK_Records_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="BeautySalonModel.FK_service_list_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="BeautySalonModel.FK_TimeWork_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="BeautySalonModel.FK_TimeWork_Graphic" ManuallyRouted="false" />
+        <AssociationConnector Association="BeautySalonModel.FK_history_service_list" ManuallyRouted="false" />
+        <AssociationConnector Association="BeautySalonModel.FK_history_status" ManuallyRouted="false" />
+        <AssociationConnector Association="BeautySalonModel.FK_Records_service" ManuallyRouted="false" />
+        <AssociationConnector Association="BeautySalonModel.FK_service_list_service" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

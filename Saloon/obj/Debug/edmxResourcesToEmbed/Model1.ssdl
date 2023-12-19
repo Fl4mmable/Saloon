@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище BeautySalonModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="surname" Type="nvarchar" MaxLength="50" />
+    <Property Name="phone_number" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="day_of_week">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="surname" Type="nvarchar" MaxLength="50" />
+    <Property Name="post_id" Type="int" />
+    <Property Name="phone_number" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Graphic">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="jobstart" Type="time" Precision="7" />
+    <Property Name="jobend" Type="time" Precision="7" />
+  </EntityType>
+  <EntityType Name="history">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date_service" Type="date" />
+    <Property Name="status_id" Type="int" />
+    <Property Name="service_list_id" Type="int" />
+    <Property Name="client_id" Type="int" />
+    <Property Name="time" Type="time" Precision="7" />
+  </EntityType>
+  <EntityType Name="post">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Records">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="id_client" Type="int" />
+    <Property Name="id_employee" Type="int" />
+    <Property Name="id_day_of_week" Type="int" />
+    <Property Name="timestart" Type="nvarchar" MaxLength="50" />
+    <Property Name="timeend" Type="nvarchar" MaxLength="50" />
+    <Property Name="id_service" Type="int" />
+    <Property Name="date" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="service">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="cost" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="duration" Type="int" />
+  </EntityType>
+  <EntityType Name="service_list">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="service_id" Type="int" />
+    <Property Name="employee_id" Type="int" />
+  </EntityType>
+  <EntityType Name="status">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TimeWork">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="employee_id" Type="int" />
+    <Property Name="day_of_week_id" Type="int" />
+    <Property Name="ID_Graphic" Type="int" />
+  </EntityType>
+  <Association Name="FK_employee_post">
+    <End Role="post" Type="Self.post" Multiplicity="0..1" />
+    <End Role="employee" Type="Self.employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="post">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="employee">
+        <PropertyRef Name="post_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_history_client">
+    <End Role="client" Type="Self.client" Multiplicity="0..1" />
+    <End Role="history" Type="Self.history" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="history">
+        <PropertyRef Name="client_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_history_service_list">
+    <End Role="service_list" Type="Self.service_list" Multiplicity="0..1" />
+    <End Role="history" Type="Self.history" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="service_list">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="history">
+        <PropertyRef Name="service_list_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_history_status">
+    <End Role="status" Type="Self.status" Multiplicity="0..1" />
+    <End Role="history" Type="Self.history" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="status">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="history">
+        <PropertyRef Name="status_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Records_client">
+    <End Role="client" Type="Self.client" Multiplicity="0..1" />
+    <End Role="Records" Type="Self.Records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Records">
+        <PropertyRef Name="id_client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Records_day_of_week">
+    <End Role="day_of_week" Type="Self.day_of_week" Multiplicity="0..1" />
+    <End Role="Records" Type="Self.Records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="day_of_week">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Records">
+        <PropertyRef Name="id_day_of_week" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Records_employee">
+    <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+    <End Role="Records" Type="Self.Records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Records">
+        <PropertyRef Name="id_employee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Records_service">
+    <End Role="service" Type="Self.service" Multiplicity="0..1" />
+    <End Role="Records" Type="Self.Records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="service">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Records">
+        <PropertyRef Name="id_service" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_service_list_employee">
+    <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+    <End Role="service_list" Type="Self.service_list" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="service_list">
+        <PropertyRef Name="employee_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_service_list_service">
+    <End Role="service" Type="Self.service" Multiplicity="0..1" />
+    <End Role="service_list" Type="Self.service_list" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="service">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="service_list">
+        <PropertyRef Name="service_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeWork_day_of_week">
+    <End Role="day_of_week" Type="Self.day_of_week" Multiplicity="0..1" />
+    <End Role="TimeWork" Type="Self.TimeWork" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="day_of_week">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TimeWork">
+        <PropertyRef Name="day_of_week_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeWork_employee">
+    <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+    <End Role="TimeWork" Type="Self.TimeWork" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TimeWork">
+        <PropertyRef Name="employee_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeWork_Graphic">
+    <End Role="Graphic" Type="Self.Graphic" Multiplicity="0..1" />
+    <End Role="TimeWork" Type="Self.TimeWork" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Graphic">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeWork">
+        <PropertyRef Name="ID_Graphic" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище BeautySalonModelContainer">
+    <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="day_of_week" EntityType="Self.day_of_week" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Graphic" EntityType="Self.Graphic" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="history" EntityType="Self.history" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Records" EntityType="Self.Records" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="service" EntityType="Self.service" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="service_list" EntityType="Self.service_list" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="status" EntityType="Self.status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TimeWork" EntityType="Self.TimeWork" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_employee_post" Association="Self.FK_employee_post">
+      <End Role="post" EntitySet="post" />
+      <End Role="employee" EntitySet="employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_history_client" Association="Self.FK_history_client">
+      <End Role="client" EntitySet="client" />
+      <End Role="history" EntitySet="history" />
+    </AssociationSet>
+    <AssociationSet Name="FK_history_service_list" Association="Self.FK_history_service_list">
+      <End Role="service_list" EntitySet="service_list" />
+      <End Role="history" EntitySet="history" />
+    </AssociationSet>
+    <AssociationSet Name="FK_history_status" Association="Self.FK_history_status">
+      <End Role="status" EntitySet="status" />
+      <End Role="history" EntitySet="history" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Records_client" Association="Self.FK_Records_client">
+      <End Role="client" EntitySet="client" />
+      <End Role="Records" EntitySet="Records" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Records_day_of_week" Association="Self.FK_Records_day_of_week">
+      <End Role="day_of_week" EntitySet="day_of_week" />
+      <End Role="Records" EntitySet="Records" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Records_employee" Association="Self.FK_Records_employee">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="Records" EntitySet="Records" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Records_service" Association="Self.FK_Records_service">
+      <End Role="service" EntitySet="service" />
+      <End Role="Records" EntitySet="Records" />
+    </AssociationSet>
+    <AssociationSet Name="FK_service_list_employee" Association="Self.FK_service_list_employee">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="service_list" EntitySet="service_list" />
+    </AssociationSet>
+    <AssociationSet Name="FK_service_list_service" Association="Self.FK_service_list_service">
+      <End Role="service" EntitySet="service" />
+      <End Role="service_list" EntitySet="service_list" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeWork_day_of_week" Association="Self.FK_TimeWork_day_of_week">
+      <End Role="day_of_week" EntitySet="day_of_week" />
+      <End Role="TimeWork" EntitySet="TimeWork" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeWork_employee" Association="Self.FK_TimeWork_employee">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="TimeWork" EntitySet="TimeWork" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeWork_Graphic" Association="Self.FK_TimeWork_Graphic">
+      <End Role="Graphic" EntitySet="Graphic" />
+      <End Role="TimeWork" EntitySet="TimeWork" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
